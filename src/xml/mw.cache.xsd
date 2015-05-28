@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:tns="http://www.ibr.cs.tu-bs.de/courses/ss15/cc/ue02/cache/schema"
+        targetNamespace="http://www.ibr.cs.tu-bs.de/courses/ss15/cc/ue02/cache/schema"
+        elementFormDefault="qualified"
+        xmlns="http://www.w3.org/2001/XMLSchema">
+
+    <complexType name="MWEntry">
+        <sequence>
+            <element name="key" type="string" maxOccurs="1" minOccurs="0"></element>
+            <element name="value" type="string" maxOccurs="1" minOccurs="0"></element>
+        </sequence>
+        <attribute name="status" type="tns:MWStatus" use="required"></attribute>
+        <attribute name="message" type="string"></attribute>
+    </complexType>
+
+    <simpleType name="MWStatus">
+        <restriction base="string">
+            <enumeration id="HTTP_OK" value="200 OK"></enumeration>
+            <enumeration id="HTTP_CREATED" value="201 CREATED"></enumeration>
+            <enumeration id="HTTP_BAD_REQUEST" value="400 BAD REQUEST"></enumeration>
+            <enumeration id="HTTP_NOT_FOUND" value="404 NOT FOUND"></enumeration>
+            <enumeration id="HTTP_BAD_METHOD" value="405 BAD METHOD"></enumeration>
+            <enumeration id="HTTP_INTERNAL_ERROR" value="500 INTERNAL SERVER ERROR"></enumeration>
+        </restriction>
+    </simpleType>
+
+    <element name="MWMessageBody" type="tns:MWEntry"></element>
+
+</schema>
