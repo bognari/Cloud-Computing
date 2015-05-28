@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+            elementFormDefault="qualified"
+            jaxb:version="2.0">
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <xsd:globalBindings typesafeEnumMemberName="generateName"/>
+        </xsd:appinfo>
+    </xsd:annotation>
+
+    <xsd:simpleType name="MWStatus">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <jaxb:typesafeEnumClass>
+                    <jaxb:typesafeEnumMember value="200" name="HTTP_OK"/>
+                    <jaxb:typesafeEnumMember value="201" name="HTTP_CREATED"/>
+                    <jaxb:typesafeEnumMember value="400" name="HTTP_BAD_REQUEST"/>
+                    <jaxb:typesafeEnumMember value="404" name="HTTP_NOT_FOUND"/>
+                    <jaxb:typesafeEnumMember value="405" name="HTTP_BAD_METHOD"/>
+                    <jaxb:typesafeEnumMember value="500" name="HTTP_INTERNAL_ERROR"/>
+                </jaxb:typesafeEnumClass>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:int">
+            <xsd:enumeration value="200"/>
+            <xsd:enumeration value="201"/>
+            <xsd:enumeration value="400"/>
+            <xsd:enumeration value="404"/>
+            <xsd:enumeration value="405"/>
+            <xsd:enumeration value="500"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="MWEntry">
+        <xsd:attribute name="status" type="MWStatus" use="required"/>
+        <xsd:attribute name="message" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:element name="MWMessageBody" type="MWEntry"/>
+
+</xsd:schema>

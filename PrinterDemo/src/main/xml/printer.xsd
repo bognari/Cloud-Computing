@@ -1,0 +1,11 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- Data Types -->
+    <xsd:complexType name="MWText">
+        <xsd:sequence>
+            <xsd:element name="text" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!-- Messages -->
+    <xsd:element name="MWPrinterRequest" type="MWText"/>
+    <xsd:element name="MWPrinterReply" type="MWText"/>
+</xsd:schema>
