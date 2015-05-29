@@ -280,12 +280,14 @@ public class MWRegistryAccess {
             //organization.removeServices(organization.getServices());
 
             Iterator<Service> iterator = organization.getServices().iterator();
+            List<Service> toBeRemoved = new LinkedList<>();
             while (iterator.hasNext()) {
                 Service service = iterator.next();
                 if (service.getName().getValue().equals(serviceName)) {
-                    iterator.remove();
+                    toBeRemoved.add(service);
                 }
             }
+            organization.removeServices(toBeRemoved);
 
             Service service = lcm.createService(serviceName);
 

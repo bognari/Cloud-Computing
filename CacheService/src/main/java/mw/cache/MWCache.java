@@ -18,6 +18,7 @@ import javax.xml.ws.http.HTTPBinding;
 import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.*;
 
@@ -91,21 +92,41 @@ public class MWCache implements Provider<Source> {
      * ...
      */
     public static void main(String[] args) {
-        String serviceUrl = "http://localhost:12345/cache-service";
+        String serviceUrl_out;
 
         try {
-            serviceUrl = String.format("http://%s:12345/cache-service", InetAddress.getLocalHost().getHostAddress());
-        } catch (UnknownHostException e) {
+            if (args.length > 0 && args[0].equals("l")) {
+                throw new IOException();
+            }
+            Scanner scanner = new Scanner(new URL("http://169.254.169.254/latest/meta-data/public-ipv4").openStream());
+            serviceUrl_out = String.format("http://%s:12345/cache-service", scanner.nextLine());
+        } catch (IOException e) {
             e.printStackTrace();
+            try {
+                serviceUrl_out = String.format("http://%s:12345/cache-service", InetAddress.getLocalHost().getHostAddress());
+            } catch (UnknownHostException e1) {
+                e1.printStackTrace();
+                serviceUrl_out = "http://localhost:12345/cache-service";
+            }
+        }
+
+        String serviceUrl_in;
+        try {
+            serviceUrl_in = String.format("http://%s:12345/cache-service", InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException e1) {
+            e1.printStackTrace();
+            serviceUrl_in = "http://localhost:12345/cache-service";
         }
 
         System.out.println("Initializing MWCache service...");
+        System.out.println("serviceUrl_out = " + serviceUrl_out);
+        System.out.println("serviceUrl_in = " + serviceUrl_in);
 
         // Instantiation and publication of the service endpoint ...
         MWCache mwcache = new MWCache();
 
         Endpoint endpoint = Endpoint.create(HTTPBinding.HTTP_BINDING, mwcache);
-        endpoint.publish(serviceUrl);
+        endpoint.publish(serviceUrl_in);
 
         MWRegistryAccess mwRegistryAccess = new MWRegistryAccess();
 
@@ -114,6 +135,7 @@ public class MWCache implements Provider<Source> {
             url = MWRegistryAccess.getRegistryURL();
         } catch (IOException e1) {
             System.err.printf("Konnte die URL nicht laden%n");
+            e1.printStackTrace();
             return;
         }
 
@@ -135,17 +157,28 @@ public class MWCache implements Provider<Source> {
             return;
         }
 
-        mwRegistryAccess.registerService(config.getProperty("user"), "MWCacheService", serviceUrl);
+        mwRegistryAccess.registerService(config.getProperty("user"), "MWCacheService", serviceUrl_out);
         mwRegistryAccess.closeConnection();
 
         System.out.println("mwCache ready: " + endpoint.isPublished());
-        System.out.println("Run at " + serviceUrl);
+        System.out.println("Run at " + serviceUrl_out);
 
         Scanner scanner = new Scanner(System.in);
 
-        do {
-            System.out.println("\"exit\" for exit");
-        } while (!scanner.next().equals("exit"));
+        try {
+            do {
+                System.out.println("\"exit\" for exit");
+            } while (!scanner.next().equals("exit"));
+
+        } catch (NoSuchElementException ignored) {
+            while (true) {
+                try {
+                    Thread.sleep(Long.MAX_VALUE);
+                } catch (InterruptedException ignored1) {
+
+                }
+            }
+        }
 
         System.out.println("Shutdown MWCache service");
         endpoint.stop();

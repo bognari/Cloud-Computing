@@ -27,6 +27,7 @@ public class MWMyPathService implements MWPathServiceInterface {
     private final MWCacheClient cacheClient = new MWCacheClient();
     private MWMyFacebookService mwMyFacebookService;
 
+
     public MWMyPathService() {
 
         MWRegistryAccess mwRegistryAccess = new MWRegistryAccess();
@@ -60,21 +61,42 @@ public class MWMyPathService implements MWPathServiceInterface {
     public static void main(String[] args) {
         MWPathServiceInterface mwPathService = new MWMyPathService();
 
-        String wsdl;
+        String wsdl_out;
         try {
-            wsdl = String.format("http://%s:12347/mwPathService?wsdl", InetAddress.getLocalHost().getHostAddress());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            return;
+            if (args.length > 0 && args[0].equals("l")) {
+                throw new IOException();
+            }
+            Scanner scanner = new Scanner(new URL("http://169.254.169.254/latest/meta-data/public-ipv4").openStream());
+            wsdl_out = String.format("http://%s:12347/mwPathService?wsdl", scanner.nextLine());
+        } catch (IOException e) {
+            //e.printStackTrace();
+            try {
+                wsdl_out = String.format("http://%s:12347/mwPathService?wsdl", InetAddress.getLocalHost().getHostAddress());
+            } catch (UnknownHostException e1) {
+                //e1.printStackTrace();
+                wsdl_out = "http://localhost:12347/mwPathService?wsdl";
+            }
         }
+
+        String wsdl_in;
+        try {
+            wsdl_in = String.format("http://%s:12347/mwPathService?wsdl", InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException e1) {
+            e1.printStackTrace();
+            wsdl_in = "http://localhost:12347/mwPathService?wsdl";
+        }
+
+        System.out.println("wsdl_out = " + wsdl_out);
+        System.out.println("wsdl_in = " + wsdl_in);
 
         Endpoint e;
         try {
-            e = Endpoint.publish(wsdl, mwPathService);
+            e = Endpoint.publish(wsdl_in, mwPathService);
         } catch (Exception e1) {
             e1.printStackTrace();
             return;
         }
+
 
         MWRegistryAccess mwRegistryAccess = new MWRegistryAccess();
 
@@ -83,6 +105,7 @@ public class MWMyPathService implements MWPathServiceInterface {
             url = MWRegistryAccess.getRegistryURL();
         } catch (IOException e1) {
             System.err.printf("Konnte die URL nicht laden%n");
+            e1.printStackTrace();
             return;
         }
 
@@ -104,18 +127,29 @@ public class MWMyPathService implements MWPathServiceInterface {
             return;
         }
 
-        mwRegistryAccess.registerService(config.getProperty("user"), "MWPathService", wsdl);
+        mwRegistryAccess.registerService(config.getProperty("user"), "MWPathService", wsdl_out);
         mwRegistryAccess.closeConnection();
 
 
         System.out.println("mwPathService ready: " + e.isPublished());
-        System.out.println("Run at " + wsdl);
+        System.out.println("Run at " + wsdl_out);
 
         Scanner scanner = new Scanner(System.in);
 
-        do {
-            System.out.println("\"exit\" for exit");
-        } while (!scanner.next().equals("exit"));
+        try {
+            do {
+                System.out.println("\"exit\" for exit");
+            } while (!scanner.next().equals("exit"));
+
+        } catch (NoSuchElementException ignored) {
+            while (true) {
+                try {
+                    Thread.sleep(Long.MAX_VALUE);
+                } catch (InterruptedException ignored1) {
+
+                }
+            }
+        }
 
         System.out.println("Shutdown MWCache service");
         e.stop();

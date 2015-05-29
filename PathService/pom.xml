@@ -30,7 +30,7 @@
     </dependencies>
 
     <build>
-        <finalName>mwPathServicet</finalName>
+        <finalName>mwPathService</finalName>
         <plugins>
             <!-- download source code in Eclipse, best practice -->
             <plugin>
