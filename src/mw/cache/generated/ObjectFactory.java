@@ -15,11 +15,18 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each Java content interface and Java element interface generated in the
- * mw.cache.generated package. <p>An ObjectFactory allows you to programatically construct new instances of the Java
- * representation for XML content. The Java representation of XML content can consist of schema derived interfaces and
- * classes representing the binding of schema type definitions, element declarations and model groups.  Factory methods
- * for each of these are provided in this class.
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the mw.cache.generated package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
+ * provided in this class.
+ * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -27,14 +34,15 @@ public class ObjectFactory {
     private final static QName _MWMessageBody_QNAME = new QName("http://www.ibr.cs.tu-bs.de/courses/ss15/cc/ue02/cache/schema", "MWMessageBody");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package:
-     * mw.cache.generated
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: mw.cache.generated
+     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link MWEntry }
+     * 
      */
     public MWEntry createMWEntry() {
         return new MWEntry();
@@ -42,6 +50,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link MWEntry }{@code >}}
+     * 
      */
     @XmlElementDecl(namespace = "http://www.ibr.cs.tu-bs.de/courses/ss15/cc/ue02/cache/schema", name = "MWMessageBody")
     public JAXBElement<MWEntry> createMWMessageBody(MWEntry value) {

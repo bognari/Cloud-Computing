@@ -16,9 +16,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java-Klasse fuer MWEntry complex type.
- * <p/>
+ * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
- * <p/>
+ * 
  * <pre>
  * &lt;complexType name="MWEntry">
  *   &lt;complexContent>
@@ -27,13 +27,14 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="value" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attribute name="status" use="required" type="{http://www.ibr.cs.tu-bs.de/courses/ss15/cc/ue02/cache/schema}MWStatus"
- * />
+ *       &lt;attribute name="status" use="required" type="{http://www.ibr.cs.tu-bs.de/courses/ss15/cc/ue02/cache/schema}MWStatus" />
  *       &lt;attribute name="message" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MWEntry", propOrder = {
@@ -51,8 +52,11 @@ public class MWEntry {
 
     /**
      * Ruft den Wert der key-Eigenschaft ab.
-     *
-     * @return possible object is {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getKey() {
         return key;
@@ -60,8 +64,11 @@ public class MWEntry {
 
     /**
      * Legt den Wert der key-Eigenschaft fest.
-     *
-     * @param value allowed object is {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setKey(String value) {
         this.key = value;
@@ -69,8 +76,11 @@ public class MWEntry {
 
     /**
      * Ruft den Wert der value-Eigenschaft ab.
-     *
-     * @return possible object is {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getValue() {
         return value;
@@ -78,8 +88,11 @@ public class MWEntry {
 
     /**
      * Legt den Wert der value-Eigenschaft fest.
-     *
-     * @param value allowed object is {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setValue(String value) {
         this.value = value;
@@ -87,8 +100,11 @@ public class MWEntry {
 
     /**
      * Ruft den Wert der status-Eigenschaft ab.
-     *
-     * @return possible object is {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getStatus() {
         return status;
@@ -96,8 +112,11 @@ public class MWEntry {
 
     /**
      * Legt den Wert der status-Eigenschaft fest.
-     *
-     * @param value allowed object is {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setStatus(String value) {
         this.status = value;
@@ -105,8 +124,11 @@ public class MWEntry {
 
     /**
      * Ruft den Wert der message-Eigenschaft ab.
-     *
-     * @return possible object is {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getMessage() {
         return message;
@@ -114,8 +136,11 @@ public class MWEntry {
 
     /**
      * Legt den Wert der message-Eigenschaft fest.
-     *
-     * @param value allowed object is {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setMessage(String value) {
         this.message = value;

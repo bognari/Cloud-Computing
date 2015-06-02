@@ -5,4 +5,5 @@
 // Generiert: 2015.05.22 um 03:32:09 PM CEST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ibr.cs.tu-bs.de/courses/ss15/cc/ue02/cache/schema", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED) package mw.cache.generated;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ibr.cs.tu-bs.de/courses/ss15/cc/ue02/cache/schema", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+package mw.cache.generated;
