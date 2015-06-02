@@ -12,7 +12,8 @@ import javax.xml.ws.WebFault;
  */
 @WebFault(name = "MWUnknownIDException", targetNamespace = "http://facebook.mw/")
 public class MWUnknownIDException_Exception
-    extends Exception {
+    extends Exception
+{
 
     /**
      * Java type that goes as soapenv:Fault detail element.
@@ -42,7 +43,7 @@ public class MWUnknownIDException_Exception
     }
 
     /**
-     *
+     * 
      * @return
      *     returns fault bean: mw.facebook.MWUnknownIDException
      */

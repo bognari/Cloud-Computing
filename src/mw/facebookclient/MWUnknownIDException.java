@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
+ * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -35,7 +35,7 @@ public class MWUnknownIDException {
 
     /**
      * Ruft den Wert der message-Eigenschaft ab.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link String }
@@ -47,7 +47,7 @@ public class MWUnknownIDException {
 
     /**
      * Legt den Wert der message-Eigenschaft fest.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link String }
