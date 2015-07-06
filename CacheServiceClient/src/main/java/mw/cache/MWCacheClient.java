@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Client to the MWCache service implementation.
- * <p>
+ * <p/>
  * This class provides two methods ({@link MWCacheClient#addObject(String, String)}, {@link
  * MWCacheClient#getObject(String)} &ndash; which allow for accessing the cache as if it was running locally.
  *

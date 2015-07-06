@@ -1,4 +1,3 @@
-
 package mw.facebookclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java-Klasse für MWUnknownIDException complex type.
- * <p>
+ * <p/>
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
- * <p>
+ * <p/>
  * <pre>
  * &lt;complexType name="MWUnknownIDException">
  *   &lt;complexContent>

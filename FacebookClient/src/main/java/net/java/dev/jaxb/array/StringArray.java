@@ -1,4 +1,3 @@
-
 package net.java.dev.jaxb.array;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,9 +10,9 @@ import java.util.List;
 
 /**
  * <p>Java-Klasse für stringArray complex type.
- * <p>
+ * <p/>
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
- * <p>
+ * <p/>
  * <pre>
  * &lt;complexType name="stringArray">
  *   &lt;complexContent>
@@ -38,20 +37,20 @@ public class StringArray {
 
     /**
      * Gets the value of the item property.
-     * <p>
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
      * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
      * the item property.
-     * <p>
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getItem().add(newItem);
      * </pre>
-     * <p>
-     * <p>
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list {@link String }
      */
     public List<String> getItem() {

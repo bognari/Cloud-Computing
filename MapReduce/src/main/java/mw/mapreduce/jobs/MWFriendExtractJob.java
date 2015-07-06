@@ -47,11 +47,10 @@ public class MWFriendExtractJob implements MWJob {
     }
 
     class MWFriendExtractMapper extends MWMapper<String, String, String, String> {
-        Pattern profstart = Pattern.compile("DOCTYPE html PUBLIC");
-        Pattern profend = Pattern.compile("</html>");
-        Pattern profId = Pattern.compile("<link rel=\"canonical\" href=\"http://.*\\.facebook\\.com/(people/.*/)?(.*)\" />");
-        Pattern profFriend = Pattern.compile("<a class=\"title\" href=\"http://.*\\.facebook\\.com/(people/.*/)?(.*)" +
-            "\" rel=\"friend\"");
+        //private final Pattern prof = Pattern.compile("<title>.* | Facebook</title>");
+        private final Pattern prof = Pattern.compile("<html.*>");
+        private final Pattern profId = Pattern.compile("<input type=\"hidden\" id=\"next\" name=\"next\" value=\"http://.*\\.facebook\\.com/(people/.*/)?(.*)\" autocomplete=\"off\" />");
+        private final Pattern profFriend = Pattern.compile("<a class=\"title\" href=\"http://.*\\.facebook\\.com/(people/.*/)?(.*)\" rel=\"friend\" title=\".*\"><img class=\"UIProfileImage UIProfileImage_LARGE img\" src=\".*\\.jpg\" alt=\".*\"></img></a>");
 
         boolean isInProfile = false;
         String id = "";
@@ -59,7 +58,7 @@ public class MWFriendExtractJob implements MWJob {
         public void run() {
 
             while (context.nextKeyValues() && !isInProfile) {
-                Matcher matcher = profstart.matcher(context.getCurrentValues().iterator().next());
+                Matcher matcher = prof.matcher(context.getCurrentValues().iterator().next());
                 isInProfile = matcher.find();
             }
 
@@ -82,7 +81,7 @@ public class MWFriendExtractJob implements MWJob {
 
         void check(String line) {
             if (isInProfile) {
-                Matcher matcher = profend.matcher(line);
+                Matcher matcher = prof.matcher(line);
                 if (matcher.find()) {
                     isInProfile = false;
                 }
@@ -97,7 +96,7 @@ public class MWFriendExtractJob implements MWJob {
                     map(friend, id, context);
                 }
             } else {
-                Matcher matcher = profstart.matcher(line);
+                Matcher matcher = prof.matcher(line);
                 if (matcher.find()) {
                     isInProfile = true;
                 }

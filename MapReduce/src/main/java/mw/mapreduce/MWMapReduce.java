@@ -22,8 +22,8 @@ import java.util.concurrent.Future;
 
 public class MWMapReduce {
 
-    private static final int REDUCER = 3;
-    private static final int MAPPER = 3;
+    private static final int REDUCER = 8;
+    private static final int MAPPER = 8;
 
     private final MWJob app;
     private final String inFile;

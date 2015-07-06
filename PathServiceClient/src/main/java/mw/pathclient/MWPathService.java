@@ -1,4 +1,3 @@
-
 package mw.pathclient;
 
 import net.java.dev.jaxb.array.StringArray;

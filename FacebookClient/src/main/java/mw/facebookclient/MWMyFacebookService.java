@@ -1,4 +1,3 @@
-
 package mw.facebookclient;
 
 import net.java.dev.jaxb.array.StringArray;

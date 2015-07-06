@@ -1,4 +1,3 @@
-
 package net.java.dev.jaxb.array;
 
 import javax.xml.bind.annotation.XmlRegistry;

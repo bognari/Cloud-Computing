@@ -25,7 +25,7 @@ import java.util.*;
 
 /**
  * Caching service.
- * <p>
+ * <p/>
  * Aus der Aufgabenstellung: &quot;Die Cache-Implementierung wird von der Klasse {@code MWCache} bereitgestellt. Diese
  * implementiert die Provider-Schnittstelle für Web-Services, da sie direkt die Payloads der eintreffenden SOAP-Anfragen
  * verarbeiten soll. <code> public class MWCache implements Provider<Source> { public Source invoke(Source source); }
@@ -88,7 +88,7 @@ public class MWCache implements Provider<Source> {
 
     /**
      * Starts the web service.
-     * <p>
+     * <p/>
      * ...
      */
     public static void main(String[] args) {

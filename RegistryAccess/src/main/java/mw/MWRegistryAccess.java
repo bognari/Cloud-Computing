@@ -9,6 +9,7 @@ import javax.xml.registry.infomodel.ServiceBinding;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.PasswordAuthentication;
+import java.net.Socket;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -150,7 +151,7 @@ public class MWRegistryAccess {
                 Collection<ServiceBinding> serviceBindings = s.getServiceBindings();
 
                 for (ServiceBinding sb : serviceBindings) {
-                    System.out.printf("URL: %s", sb.getAccessURI());
+                    System.out.printf("URL: %s%n", sb.getAccessURI());
                 }
                 System.out.println();
             }
@@ -191,6 +192,23 @@ public class MWRegistryAccess {
      * @throws NoSuchElementException
      */
     public String getServiceURL(@NotNull String orgName, @NotNull String serviceName) throws JAXRException, IOException, NoSuchElementException {
+        List<String> urls = getAllServiceURLs(orgName, serviceName);
+        return urls.get((int) (urls.size() * Math.random()));
+    }
+
+    /**
+     * ...
+     *
+     * @param orgName     Dienstanbieter
+     * @param serviceName Dienstbezeichner
+     *
+     * @return URLs des Webservices als {@link List}-Objekt von {@link String}s.
+     *
+     * @throws JAXRException
+     * @throws IOException
+     * @throws NoSuchElementException
+     */
+    public List<String> getAllServiceURLs(@NotNull String orgName, @NotNull String serviceName) throws JAXRException, IOException, NoSuchElementException {
         String registryURL = getRegistryURL();
         openConnection(registryURL + "/inquiry", registryURL + "/publish");
 
@@ -217,11 +235,30 @@ public class MWRegistryAccess {
             if (s.getProvidingOrganization().getName().getValue().equals(orgName)) {
                 Collection<ServiceBinding> serviceBindings = s.getServiceBindings();
                 for (ServiceBinding sb : serviceBindings) {
-                    urls.add(sb.getAccessURI());
+                    Socket socket = null;
+                    boolean reachable = false;
+                    try {
+                        String[] url = sb.getAccessURI().split(":");
+                        try {
+                            socket = new Socket(url[1].substring(2), Integer.parseInt(url[2]));
+                            reachable = socket.isConnected();
+                        } catch (IOException ignore) {
+                            ignore.printStackTrace();
+                        }
+                    } finally {
+                        if (socket != null) {
+                            try {
+                                socket.close();
+                            } catch (IOException ignore) {
+                            }
+                        }
+                    }
+                    if (reachable) {
+                        urls.add(sb.getAccessURI());
+                    }
                 }
             }
         }
-
         closeConnection();
 
         if (urls.size() < 1) {
@@ -229,7 +266,7 @@ public class MWRegistryAccess {
         }
 
         // if urls.size() >= 1, pick one at random
-        return urls.get((int) (urls.size() * Math.random()));
+        return urls;
     }
 
     public void authenticate(@NotNull String userName, @NotNull String password) throws JAXRException {
@@ -246,6 +283,11 @@ public class MWRegistryAccess {
     }
 
     public void registerService(@NotNull String orgName, @NotNull String serviceName, @NotNull String wsdlURL) {
+        registerService(orgName, serviceName, wsdlURL, false);
+    }
+
+
+    public void registerService(@NotNull String orgName, @NotNull String serviceName, @NotNull String wsdlURL, boolean multible) {
         if (connection == null) {
             throw new IllegalStateException("Keine Verbindung%n");
         }
@@ -281,20 +323,57 @@ public class MWRegistryAccess {
 
             Iterator<Service> iterator = organization.getServices().iterator();
             List<Service> toBeRemoved = new LinkedList<>();
+
+            List<ServiceBinding> urls = new LinkedList<>();
+
             while (iterator.hasNext()) {
                 Service service = iterator.next();
                 if (service.getName().getValue().equals(serviceName)) {
                     toBeRemoved.add(service);
+                    if (multible) {
+                        urls.addAll(service.getServiceBindings());
+                    }
                 }
             }
+
+            Iterator<ServiceBinding> serviceBindingIterator = urls.iterator();
+            while (serviceBindingIterator.hasNext()) {
+                ServiceBinding serviceBinding = serviceBindingIterator.next();
+                Socket socket = null;
+                boolean reachable = false;
+                try {
+                    String[] url = serviceBinding.getAccessURI().split(":");
+                    try {
+                        socket = new Socket(url[1].substring(2), Integer.parseInt(url[2]));
+                        reachable = socket.isConnected();
+                    } catch (IOException ignore) {
+                        ignore.printStackTrace();
+                    }
+                } finally {
+                    if (socket != null) {
+                        try {
+                            socket.close();
+                        } catch (IOException ignore) {
+                        }
+                    }
+                }
+
+                if (!reachable) {
+                    serviceBindingIterator.remove();
+                }
+            }
+
             organization.removeServices(toBeRemoved);
 
             Service service = lcm.createService(serviceName);
 
             ServiceBinding serviceBinding = lcm.createServiceBinding();
             serviceBinding.setAccessURI(wsdlURL);
-
             service.addServiceBinding(serviceBinding);
+
+            for (ServiceBinding serviceBinding1 : urls) {
+                service.addServiceBinding(serviceBinding1);
+            }
 
             organization.addService(service);
 
