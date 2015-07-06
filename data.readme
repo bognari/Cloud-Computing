@@ -1,0 +1,38 @@
+### SUCHMUSTER ###
+
++++ Profilanfang +++
+
+- Vorschlag für Suchmuster: <title>
+- Beispielzeile:
+
+    <title>Allan Thompson | Facebook</title>
+
+
++++ ID des Profileigentümers +++
+
+- Vorschlag für Suchmuster: id="next"
+- Beispielzeile für ID "0zzymandias":
+
+    <input type="hidden" id="next" name="next" value="http://www.facebook.com/0zzymandias" autocomplete="off" />
+
+
++++ Freundschaftsbeziehung +++
+
+- Vorschlag für Suchmuster: rel="friend"
+- Beispielzeile für ID "730106348":
+
+    <a class="title" href="http://www.facebook.com/people/Charles-Ongele/730106348" rel="friend" title="Charles Ongele"><img class="UIProfileImage UIProfileImage_LARGE img" src="http://profile.ak.fbcdn.net/hprofile-ak-sf2p/hs310.ash1/23250_730106348_713_q.jpg" alt="Charles Ongele"></img></a>
+
+
+
+### ZUSATZINFORMATIONEN ###
+
++++ data-small.dump +++
+
+- 2530 Profile
+- 40244 Freundschaftsbeziehungen
+
++++ data.dump +++
+
+- 25278 Profile
+- 395344 Freundschaftsbeziehungen
