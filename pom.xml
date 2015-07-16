@@ -14,6 +14,7 @@
         <module>mwClient</module>
         <module>CacheService</module>
         <module>CacheServiceClient</module>
+	<module>ZooKeeper</module>
     </modules>
     <packaging>pom</packaging>
 

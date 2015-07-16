@@ -96,8 +96,21 @@ public class MWZooKeeperServer implements ZabCallback {
                     zabProperties.setProperty("myid", String.valueOf(i));
                 }
 
+				int p = 0;
+
+
+				try {
+					ServerSocket s = new ServerSocket(0);
+					p = s.getLocalPort();
+					s.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("blabla");
+				}
+
                 String[] data = peer.split(":");
-                zabProperties.setProperty("peer" + i, String.format("%s%s", data[1].substring(2), data[2]));
+                zabProperties.setProperty("peer" + i, String.format("%s:%d", data[1].substring(2), p));
+				System.out.println("peer" + i + "=" + String.format("%s:%d", data[1].substring(2), p));
                 i++;
                 //}
             }
@@ -224,6 +237,7 @@ public class MWZooKeeperServer implements ZabCallback {
          */
         @Override
         public void run() {
+			System.out.println("connected");
             while (client.isConnected()) {
                 try {
                     MWZooKeeperMessage request = (MWZooKeeperMessage) objectInputStream.readObject();

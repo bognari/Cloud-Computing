@@ -9,8 +9,7 @@ import javax.xml.registry.infomodel.ServiceBinding;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.PasswordAuthentication;
-import java.net.Socket;
-import java.net.URI;
+import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -240,7 +239,8 @@ public class MWRegistryAccess {
                     try {
                         String[] url = sb.getAccessURI().split(":");
                         try {
-                            socket = new Socket(url[1].substring(2), Integer.parseInt(url[2]));
+                            socket = new Socket();
+							socket.connect(new InetSocketAddress(url[1].substring(2), Integer.parseInt(url[2])), 1000);
                             reachable = socket.isConnected();
                         } catch (IOException ignore) {
                             ignore.printStackTrace();
